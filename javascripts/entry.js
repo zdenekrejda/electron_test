@@ -1,7 +1,8 @@
-require('../less/main.less');
+//require('../less/main.less');
 
 'use strict';
 
 import React from "react";
+import ParameterContainer from './views/parameters.js';
 
-React.render( < div className = "myDiv" > Hello Electron! < /div>, document.getElementById('content'));
+React.render( <ParameterContainer Name="Parametry" />, document.getElementById('content'));

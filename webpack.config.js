@@ -5,6 +5,10 @@ module.exports = {
         app: ['webpack/hot/dev-server', './javascripts/entry.js'],
     },
 
+    resolve: {
+        extensions: ['', '.js', '.jsx']
+    },
+
     output: {
         path: './public/built',
         filename: 'bundle.js',
