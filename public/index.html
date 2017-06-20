@@ -1,20 +1,46 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>My Electron-React app</title>
-    <link href="http://localhost:8080/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./dist/css/shaft.css" rel="stylesheet">
 </head>
 
 <body>
-    <div id="content"></div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active">
+            <a href="#parameters" aria-controls="profile" role="tab" data-toggle="tab">Parametry</a>
+        </li>
+        <li role="presentation">
+            <a href="#shaft" aria-controls="profile" role="tab" data-toggle="tab">Šachta</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="parameters">
+            <div id="content"></div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="shaft">
+             <svg id="svg"></svg>
+        </div>
+    </div>
 </body>
-<script src="http://localhost:8080/webpack-dev-server.js"></script>
-
 <script>window.$ = window.jQuery = require('./dist/js/jquery.min.js');</script>
-<script src="http://localhost:8080/dist/js/bootstrap.min.js"></script>
-<script src="http://localhost:8080/boards/board0.js"></script>
-<script src="http://localhost:8080/built/bundle.js"></script>
-
+<script>
+      window.Snap = require('snapsvg');
+</script>
+<script src="./dist/js/bootstrap.min.js"></script>
+<script src="./boards/board0.js"></script>
+<script src="./built/bundle.js"></script>
+<script src="./dist/js/shaft.js"></script>
+<script>
+    $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+</script>
 </html>

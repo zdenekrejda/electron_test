@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "29587ff5c6b31de6914a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "78fae1ef1e58bd8eaf8d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -691,6 +691,8 @@
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
+	//require('../less/main.less');
+
 	'use strict';
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -699,15 +701,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _viewsParametersJsx = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./views/parameters.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _viewsParametersJs = __webpack_require__(160);
 
-	var _viewsParametersJsx2 = _interopRequireDefault(_viewsParametersJsx);
+	var _viewsParametersJs2 = _interopRequireDefault(_viewsParametersJs);
 
-	__webpack_require__(161);
-
-	'use strict';
-
-	_react2['default'].render(_react2['default'].createElement(_viewsParametersJsx2['default'], { Name: 'Parametry' }), document.getElementById('content'));
+	_react2['default'].render(_react2['default'].createElement(_viewsParametersJs2['default'], { Name: 'Parametry' }), document.getElementById('content'));
 
 /***/ }),
 /* 4 */
@@ -21179,326 +21177,626 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
-/* 160 */,
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _react = __webpack_require__(4);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _componentsLabelboxJs = __webpack_require__(161);
+
+	var _componentsLabelboxJs2 = _interopRequireDefault(_componentsLabelboxJs);
+
+	var _componentsIOParamEditJs = __webpack_require__(162);
+
+	var _componentsIOParamEditJs2 = _interopRequireDefault(_componentsIOParamEditJs);
+
+	var _componentsIntegerParamEditJs = __webpack_require__(163);
+
+	var _componentsIntegerParamEditJs2 = _interopRequireDefault(_componentsIntegerParamEditJs);
+
+	var _componentsEnumParamEditJs = __webpack_require__(164);
+
+	var _componentsEnumParamEditJs2 = _interopRequireDefault(_componentsEnumParamEditJs);
+
+	var ParameterDetail = _react2['default'].createClass({
+	  displayName: 'ParameterDetail',
+
+	  getInitialState: function getInitialState() {
+	    return {};
+	  },
+
+	  render: function render() {
+	    var parameter = this.props.selected;
+	    var header = "";
+	    var body = "Není vybrán žádný parametr!";
+	    var GUI_edit = null;
+	    if (parameter) {
+	      header = parameter.Name;
+	      body = parameter.Description;
+	      switch (parameter.Type) {
+	        case 0:
+	          GUI_edit = _react2['default'].createElement(_componentsEnumParamEditJs2['default'], {
+	            parameter: this.props.selected,
+	            changedCallback: this.props.changedCallback,
+	            readOnly: this.props.readOnly
+	          });
+	          console.log(this.props.readOnly);
+	          break;
+
+	        case 1:
+	          GUI_edit = _react2['default'].createElement(_componentsIntegerParamEditJs2['default'], {
+	            parameter: this.props.selected,
+	            changedCallback: this.props.changedCallback,
+	            readOnly: this.props.readOnly
+	          });
+	          break;
+
+	        case 2:
+	          GUI_edit = _react2['default'].createElement(_componentsIOParamEditJs2['default'], {
+	            parameter: this.props.selected,
+	            changedCallback: this.props.changedCallback,
+	            readOnly: this.props.readOnly
+	          });
+	          break;
+	      }
+	    }
+
+	    return _react2['default'].createElement(
+	      'div',
+	      { className: 'panel panel-primary' },
+	      _react2['default'].createElement(
+	        'div',
+	        { className: 'panel-heading' },
+	        header
+	      ),
+	      _react2['default'].createElement(
+	        'div',
+	        { className: 'panel-body' },
+	        _react2['default'].createElement(
+	          'div',
+	          null,
+	          _react2['default'].createElement(
+	            'h4',
+	            null,
+	            body
+	          )
+	        ),
+	        _react2['default'].createElement('hr', null),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'parameter-edit' },
+	          GUI_edit
+	        )
+	      )
+	    );
+	  }
+	});
+
+	var ParameterList = _react2['default'].createClass({
+	  displayName: 'ParameterList',
+
+	  render: function render() {
+	    var parameters = [];
+	    var selected_id = this.props.selected_id;
+	    var group_id = this.props.group_id;
+
+	    /* Create sub_parameters items */
+	    if (this.props.group && this.props.group.length) {
+	      for (var sub_id = 0; sub_id < this.props.group.length; sub_id++) {
+	        var activated = "list-group-item ";
+	        if (selected_id && selected_id.id === group_id && selected_id.sub_id === sub_id) activated += "active";
+
+	        parameters.push(_react2['default'].createElement(
+	          'a',
+	          { href: '#', className: activated, onClick: this.props.itemSelected.bind(null, { id: group_id, sub_id: sub_id }) },
+	          this.props.group[sub_id].Name
+	        ));
+	      }
+	    }
+
+	    return _react2['default'].createElement(
+	      'div',
+	      { className: 'list-group' },
+	      parameters
+	    );
+	  }
+	});
+
+	var ParameterGroupList = _react2['default'].createClass({
+	  displayName: 'ParameterGroupList',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      selected_id: null
+	    };
+	  },
+
+	  itemSelected: function itemSelected(selected) {
+	    var groups = this.props.groups;
+	    this.setState({ selected_id: selected });
+	    this.props.callback(groups[selected.id].Parameters[selected.sub_id]);
+	  },
+
+	  render: function render() {
+	    var groups = this.props.groups;
+	    var group_tags = [];
+	    var selected_id = this.state.selected_id;
+
+	    for (var id = 0; id < groups.length; id++) {
+	      var collapsed = id === 0 ? "panel-collapse collapse in" : "panel-collapse collapse";
+	      var group = groups[id];
+	      var collapse_id_txt = 'collapse' + id;
+	      var group_id_txt = 'group' + id;
+	      /* Create group  */
+	      group_tags.push(_react2['default'].createElement(
+	        'div',
+	        { className: 'panel panel-default' },
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'panel-heading', role: 'tab', id: group_id_txt },
+	          _react2['default'].createElement(
+	            'h4',
+	            { className: 'panel-title' },
+	            _react2['default'].createElement(
+	              'a',
+	              { role: 'button', 'data-toggle': 'collapse', 'data-parent': '#accordion', href: "#" + collapse_id_txt, 'aria-expanded': 'true', 'aria-controls': collapse_id_txt },
+	              group.GroupName
+	            )
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          { id: collapse_id_txt, className: collapsed, role: 'tabpanel', 'aria-labelledby': group_id_txt },
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'panel-body' },
+	            _react2['default'].createElement(ParameterList, { group_id: id, selected_id: selected_id, group: group.Parameters, itemSelected: this.itemSelected })
+	          )
+	        )
+	      ));
+	    }
+
+	    return _react2['default'].createElement(
+	      'div',
+	      { className: 'panel-group', id: 'accordion', role: 'tablist', 'aria-multiselectable': 'true' },
+	      group_tags
+	    );
+	  }
+	});
+
+	var ParameterContainer = _react2['default'].createClass({
+	  displayName: 'ParameterContainer',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      group: Board.Parameters,
+	      selected: null,
+	      readOnly: Board.ReadOnly
+	    };
+	  },
+
+	  selectedParameter: function selectedParameter(param) {
+	    console.log(param);
+	    this.setState({ selected: param });
+	  },
+
+	  changedParameter: function changedParameter(value) {
+	    var param = this.state.selected;
+	    param.Value = value;
+	    this.setState({ selected: param });
+	  },
+
+	  render: function render() {
+	    return _react2['default'].createElement(
+	      'div',
+	      { id: 'Parameters', className: 'container' },
+	      _react2['default'].createElement(
+	        'h2',
+	        null,
+	        _react2['default'].createElement(_componentsLabelboxJs2['default'], { label: this.props.Name, type: 'primary' })
+	      ),
+	      _react2['default'].createElement('hr', null),
+	      _react2['default'].createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'col-sm-4', id: 'parameter-list' },
+	          _react2['default'].createElement(ParameterGroupList, {
+	            groups: this.state.group,
+	            callback: this.selectedParameter,
+	            groupCallback: this.selectedGroup,
+	            group: this.state.group
+	          })
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'col-sm-8', id: 'parameter-detail' },
+	          _react2['default'].createElement(ParameterDetail, {
+	            selected: this.state.selected,
+	            changedCallback: this.changedParameter,
+	            readOnly: this.state.readOnly
+	          })
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = ParameterContainer;
+
+	// var render = ReactDOM.render(
+	//   <ParameterContainer Name="Parametry" />,
+	//   document.getElementById('container')
+	// );
+
+/***/ }),
 /* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
+	'use strict';
 
-	// load the styles
-	var content = __webpack_require__(162);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(164)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(true) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept(162, function() {
-				var newContent = __webpack_require__(162);
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var _react = __webpack_require__(4);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var LabelBox = _react2["default"].createClass({
+	  displayName: "LabelBox",
+
+	  render: function render() {
+	    var type = "label label-" + this.props.type;
+
+	    return _react2["default"].createElement(
+	      "span",
+	      { className: type },
+	      this.props.label
+	    );
+	  }
+	});
+
+	module.exports = LabelBox;
 
 /***/ }),
 /* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(163)();
-	// imports
+	'use strict';
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	// module
-	exports.push([module.id, "body {\n  background-color: #0f0;\n}\ndiv.myDiv {\n  color: #000;\n  font-size: 5em;\n}\n", ""]);
+	var _react = __webpack_require__(4);
 
-	// exports
+	var _react2 = _interopRequireDefault(_react);
 
+	var _labelboxJs = __webpack_require__(161);
+
+	var _labelboxJs2 = _interopRequireDefault(_labelboxJs);
+
+	var IOParamEdit = _react2['default'].createClass({
+	  displayName: 'IOParamEdit',
+
+	  valueChanged: function valueChanged(e) {
+	    if (this.props.readOnly) return;
+
+	    var newValue = this.props.parameter.Value;
+	    newValue.Function = e.target.value;
+	    this.props.changedCallback(newValue);
+	    console.log(newValue);
+	  },
+
+	  invertChanged: function invertChanged(invert) {
+	    if (this.props.readOnly) return;
+
+	    var newValue = this.props.parameter.Value;
+	    newValue.Invert = invert;
+	    this.props.changedCallback(newValue);
+	    console.log(invert);
+	  },
+
+	  render: function render() {
+	    var parameter = this.props.parameter;
+	    var _enum = parameter.Enum;
+	    var enum_items = [];
+
+	    for (var index = 0; index < _enum.length; index++) {
+	      enum_items.push(_react2['default'].createElement(
+	        'option',
+	        { value: index },
+	        _enum[index]
+	      ));
+	    }
+
+	    /* Check if there IO has some function */
+	    //if(parameter.Value.Function === 0) parameter.Value.Invert = false;
+
+	    var checkBox,
+	        readOnly = "",
+	        inverted = "";
+	    if (parameter.Value.Invert) {
+	      checkBox = _react2['default'].createElement('input', { type: 'checkbox', value: 'true', 'aria-label': 'Negace', checked: true, onClick: this.invertChanged.bind(null, !parameter.Value.Invert) });
+	      inverted = _react2['default'].createElement(
+	        'span',
+	        { className: 'label label-danger' },
+	        'Invertováno'
+	      );
+	    } else {
+	      checkBox = _react2['default'].createElement('input', { type: 'checkbox', value: 'true', 'aria-label': 'Negace', onClick: this.invertChanged.bind(null, !parameter.Value.Invert) });
+	    }
+
+	    if (this.props.readOnly) {
+	      readOnly = _react2['default'].createElement(
+	        'div',
+	        null,
+	        _react2['default'].createElement(
+	          'h4',
+	          null,
+	          _react2['default'].createElement(_labelboxJs2['default'], { label: 'Pouze pro čtení!', type: 'danger' })
+	        )
+	      );
+	    }
+
+	    return _react2['default'].createElement(
+	      'div',
+	      { className: 'panel panel-default' },
+	      _react2['default'].createElement(
+	        'div',
+	        { className: 'panel-body' },
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'input-group' },
+	          _react2['default'].createElement(
+	            'span',
+	            { className: 'input-group-addon beautiful' },
+	            checkBox
+	          ),
+	          _react2['default'].createElement(
+	            'select',
+	            { className: 'form-control', value: parameter.Value.Function, onChange: this.valueChanged },
+	            enum_items
+	          )
+	        ),
+	        _react2['default'].createElement('hr', null),
+	        _react2['default'].createElement(
+	          'div',
+	          null,
+	          _react2['default'].createElement(
+	            'h5',
+	            null,
+	            'Funkce:'
+	          ),
+	          _react2['default'].createElement(
+	            'h3',
+	            null,
+	            _enum[parameter.Value.Function],
+	            ' ',
+	            inverted
+	          )
+	        ),
+	        _react2['default'].createElement('hr', null),
+	        _react2['default'].createElement(
+	          'h4',
+	          null,
+	          'Typ IO'
+	        ),
+	        readOnly
+	      )
+	    );
+	  }
+	});
+
+	module.exports = IOParamEdit;
 
 /***/ }),
 /* 163 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
+	'use strict';
 
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
+	var _react = __webpack_require__(4);
 
+	var _react2 = _interopRequireDefault(_react);
+
+	var _labelboxJs = __webpack_require__(161);
+
+	var _labelboxJs2 = _interopRequireDefault(_labelboxJs);
+
+	var IntegerParamEdit = _react2['default'].createClass({
+	  displayName: 'IntegerParamEdit',
+
+	  valueChanged: function valueChanged(e) {
+	    if (this.props.readOnly) return;
+
+	    var parameter = this.props.parameter;
+	    var newValue = parseInt(e.target.value);
+
+	    if (newValue >= parameter.Min && newValue <= parameter.Max) this.props.changedCallback(newValue);
+	  },
+
+	  valueIncrement: function valueIncrement() {
+	    if (this.props.readOnly) return;
+
+	    var parameter = this.props.parameter;
+	    var newValue = parameter.Value;
+	    newValue++;
+
+	    if (newValue >= parameter.Min && newValue <= parameter.Max) this.props.changedCallback(newValue);
+	  },
+
+	  valueDecrement: function valueDecrement() {
+	    if (this.props.readOnly) return;
+	    var parameter = this.props.parameter;
+	    var newValue = parameter.Value;
+	    newValue--;
+
+	    if (newValue >= parameter.Min && newValue <= parameter.Max) this.props.changedCallback(newValue);
+	  },
+
+	  valueClear: function valueClear() {
+	    if (this.props.readOnly) return;
+	    this.props.changedCallback(this.props.parameter.Min);
+	  },
+
+	  render: function render() {
+	    var parameter = this.props.parameter,
+	        readOnly = "";
+
+	    if (this.props.readOnly) {
+	      readOnly = _react2['default'].createElement(
+	        'div',
+	        null,
+	        _react2['default'].createElement(
+	          'h4',
+	          null,
+	          _react2['default'].createElement(_labelboxJs2['default'], { label: 'Pouze pro čtení!', type: 'danger' })
+	        )
+	      );
+	    }
+
+	    return _react2['default'].createElement(
+	      'div',
+	      { className: 'panel panel-default' },
+	      _react2['default'].createElement(
+	        'div',
+	        { className: 'panel-body' },
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'input-group' },
+	          _react2['default'].createElement('input', { type: 'text', className: 'form-control', onChange: this.valueChanged, value: parameter.Value }),
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'input-group-btn' },
+	            _react2['default'].createElement(
+	              'button',
+	              { className: 'btn btn-success', type: 'button', onClick: this.valueDecrement },
+	              _react2['default'].createElement('span', { className: 'glyphicon glyphicon-minus', 'aria-hidden': 'true' })
+	            ),
+	            _react2['default'].createElement(
+	              'button',
+	              { className: 'btn btn-success', type: 'button', onClick: this.valueIncrement },
+	              _react2['default'].createElement('span', { className: 'glyphicon glyphicon-plus', 'aria-hidden': 'true' })
+	            ),
+	            _react2['default'].createElement(
+	              'button',
+	              { className: 'btn btn-danger', type: 'button', onClick: this.valueClear },
+	              _react2['default'].createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+	            )
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'h4',
+	          null,
+	          'Rozsah ',
+	          parameter.Min,
+	          ' - ',
+	          parameter.Max
+	        ),
+	        _react2['default'].createElement('hr', null),
+	        _react2['default'].createElement(
+	          'h4',
+	          null,
+	          'Typ INTEGER'
+	        ),
+	        readOnly
+	      )
+	    );
+	  }
+	});
+
+	module.exports = IntegerParamEdit;
 
 /***/ }),
 /* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	var stylesInDom = {},
-		memoize = function(fn) {
-			var memo;
-			return function () {
-				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-				return memo;
-			};
-		},
-		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
-		}),
-		getHeadElement = memoize(function () {
-			return document.head || document.getElementsByTagName("head")[0];
-		}),
-		singletonElement = null,
-		singletonCounter = 0;
+	'use strict';
 
-	module.exports = function(list, options) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-		}
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-		options = options || {};
-		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-		// tags it will allow on a page
-		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+	var _react = __webpack_require__(4);
 
-		var styles = listToStyles(list);
-		addStylesToDom(styles, options);
+	var _react2 = _interopRequireDefault(_react);
 
-		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
-				domStyle.refs--;
-				mayRemove.push(domStyle);
-			}
-			if(newList) {
-				var newStyles = listToStyles(newList);
-				addStylesToDom(newStyles, options);
-			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
-				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
-					delete stylesInDom[domStyle.id];
-				}
-			}
-		};
-	}
+	var _labelboxJs = __webpack_require__(161);
 
-	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			if(domStyle) {
-				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
-					domStyle.parts[j](item.parts[j]);
-				}
-				for(; j < item.parts.length; j++) {
-					domStyle.parts.push(addStyle(item.parts[j], options));
-				}
-			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
-					parts.push(addStyle(item.parts[j], options));
-				}
-				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-			}
-		}
-	}
+	var _labelboxJs2 = _interopRequireDefault(_labelboxJs);
 
-	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			var sourceMap = item[3];
-			var part = {css: css, media: media, sourceMap: sourceMap};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
-		}
-		return styles;
-	}
+	var EnumParamEdit = _react2['default'].createClass({
+	  displayName: 'EnumParamEdit',
 
-	function createStyleElement() {
-		var styleElement = document.createElement("style");
-		var head = getHeadElement();
-		styleElement.type = "text/css";
-		head.appendChild(styleElement);
-		return styleElement;
-	}
+	  valueChanged: function valueChanged(e) {
+	    if (this.props.readOnly) return;
 
-	function createLinkElement() {
-		var linkElement = document.createElement("link");
-		var head = getHeadElement();
-		linkElement.rel = "stylesheet";
-		head.appendChild(linkElement);
-		return linkElement;
-	}
+	    var newValue = e.target.value;
+	    this.props.changedCallback(newValue);
+	    console.log(newValue);
+	  },
 
-	function addStyle(obj, options) {
-		var styleElement, update, remove;
+	  render: function render() {
+	    var parameter = this.props.parameter,
+	        readOnly = "",
+	        _enum = parameter.Enum,
+	        enum_items = [];
 
-		if (options.singleton) {
-			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement());
-			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else if(obj.sourceMap &&
-			typeof URL === "function" &&
-			typeof URL.createObjectURL === "function" &&
-			typeof URL.revokeObjectURL === "function" &&
-			typeof Blob === "function" &&
-			typeof btoa === "function") {
-			styleElement = createLinkElement();
-			update = updateLink.bind(null, styleElement);
-			remove = function() {
-				styleElement.parentNode.removeChild(styleElement);
-				if(styleElement.href)
-					URL.revokeObjectURL(styleElement.href);
-			};
-		} else {
-			styleElement = createStyleElement();
-			update = applyToTag.bind(null, styleElement);
-			remove = function() {
-				styleElement.parentNode.removeChild(styleElement);
-			};
-		}
+	    for (var index = 0; index < _enum.length; index++) {
+	      enum_items.push(_react2['default'].createElement(
+	        'option',
+	        { value: index },
+	        _enum[index]
+	      ));
+	    }
 
-		update(obj);
+	    if (this.props.readOnly) {
+	      readOnly = _react2['default'].createElement(
+	        'div',
+	        null,
+	        _react2['default'].createElement(
+	          'h4',
+	          null,
+	          _react2['default'].createElement(_labelboxJs2['default'], { label: 'Pouze pro čtení!', type: 'danger' })
+	        )
+	      );
+	    }
 
-		return function updateStyle(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
-					return;
-				update(obj = newObj);
-			} else {
-				remove();
-			}
-		};
-	}
+	    return _react2['default'].createElement(
+	      'div',
+	      { className: 'panel panel-default' },
+	      _react2['default'].createElement(
+	        'div',
+	        { className: 'panel-body' },
+	        _react2['default'].createElement(
+	          'select',
+	          { className: 'form-control', value: parameter.Value, onChange: this.valueChanged },
+	          enum_items
+	        ),
+	        _react2['default'].createElement('hr', null),
+	        _react2['default'].createElement(
+	          'h2',
+	          null,
+	          _enum[parameter.Value]
+	        ),
+	        _react2['default'].createElement('hr', null),
+	        _react2['default'].createElement(
+	          'h4',
+	          null,
+	          'Typ ENUM'
+	        ),
+	        readOnly
+	      )
+	    );
+	  }
+	});
 
-	var replaceText = (function () {
-		var textStore = [];
-
-		return function (index, replacement) {
-			textStore[index] = replacement;
-			return textStore.filter(Boolean).join('\n');
-		};
-	})();
-
-	function applyToSingletonTag(styleElement, index, remove, obj) {
-		var css = remove ? "" : obj.css;
-
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = replaceText(index, css);
-		} else {
-			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
-			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-			if (childNodes.length) {
-				styleElement.insertBefore(cssNode, childNodes[index]);
-			} else {
-				styleElement.appendChild(cssNode);
-			}
-		}
-	}
-
-	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-		var sourceMap = obj.sourceMap;
-
-		if(media) {
-			styleElement.setAttribute("media", media)
-		}
-
-		if(styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
-		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
-			}
-			styleElement.appendChild(document.createTextNode(css));
-		}
-	}
-
-	function updateLink(linkElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-		var sourceMap = obj.sourceMap;
-
-		if(sourceMap) {
-			// http://stackoverflow.com/a/26603875
-			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-		}
-
-		var blob = new Blob([css], { type: "text/css" });
-
-		var oldSrc = linkElement.href;
-
-		linkElement.href = URL.createObjectURL(blob);
-
-		if(oldSrc)
-			URL.revokeObjectURL(oldSrc);
-	}
-
+	module.exports = EnumParamEdit;
 
 /***/ })
 /******/ ]);

@@ -19,10 +19,9 @@
     "webpack-dev-server": "^1.9.0"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
     "electron-prebuilt": "^0.28.3",
-    "jquery": "^3.2.1",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "snapsvg": "^0.5.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
